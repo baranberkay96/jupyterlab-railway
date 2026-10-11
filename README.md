@@ -1,5 +1,7 @@
 # Deploy and Host JupyterLab with Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/jupyterlab-4-data-science-workstation?referralCode=20H68q)
+
 JupyterLab 4 in your browser with a ready Python data stack: pandas, NumPy, SciPy, scikit-learn, matplotlib, seaborn, statsmodels, Dask and more. Your notebooks, installed packages, conda environments and settings live on a persistent volume, and the server is protected by a generated password and API token.
 
 ## About Hosting JupyterLab
