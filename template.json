@@ -1,0 +1,92 @@
+{
+  "name": "JupyterLab 4 Data Science Workstation",
+  "description": "Notebooks with a Python data stack, persistent storage and password login.",
+  "category": "AI/ML",
+  "tags": [
+    "jupyter",
+    "jupyterlab",
+    "notebook",
+    "python",
+    "data-science",
+    "pandas",
+    "scikit-learn",
+    "machine-learning"
+  ],
+  "image": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/jupyter.svg",
+  "upstream": {
+    "repo": "jupyter/docker-stacks",
+    "version": "quay.io/jupyter/scipy-notebook:2026-10-05 (JupyterLab 4.6.4, Jupyter Server 2.21.1, Python 3.13.15)",
+    "checked": "2026-10-11"
+  },
+  "services": {
+    "JupyterLab": {
+      "icon": "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/jupyter.svg",
+      "source": {
+        "repo": "baranberkay96/jupyterlab-railway",
+        "rootDirectory": "/services/jupyterlab"
+      },
+      "startCommand": null,
+      "preDeployCommand": null,
+      "healthcheckPath": "/api",
+      "healthcheckTimeout": 300,
+      "restartPolicyType": "ON_FAILURE",
+      "restartPolicyMaxRetries": 10,
+      "numReplicas": 1,
+      "cronSchedule": null,
+      "publicDomain": true,
+      "targetPort": 8888,
+      "tcpProxy": null,
+      "volume": {
+        "mountPath": "/home/jovyan"
+      },
+      "variables": {
+        "PORT": {
+          "defaultValue": "8888",
+          "description": "Port Jupyter Server listens on. Railway routes the domain and the healthcheck here.",
+          "required": false
+        },
+        "JUPYTER_PASSWORD": {
+          "defaultValue": "${{secret(24)}}",
+          "description": "Login password for the web UI. Generated at deploy; hashed at start and never exposed to notebooks or terminals.",
+          "required": false
+        },
+        "JUPYTER_TOKEN": {
+          "defaultValue": "${{secret(48, \"abcdef0123456789\")}}",
+          "description": "API token for IDEs and scripts (Authorization: token ...). Also accepted on the login page. Leave empty for a random token printed in the logs.",
+          "required": false
+        },
+        "RESTARTABLE": {
+          "defaultValue": "yes",
+          "description": "Restart Jupyter inside the container when it exits (e.g. File > Shut Down or after installing an extension) instead of stopping the service.",
+          "required": false
+        },
+        "PIP_USER": {
+          "defaultValue": "1",
+          "description": "pip and %pip install into ~/.local on the volume, so packages survive redeploys. Set 0 to install into the image (lost on redeploy).",
+          "required": false
+        },
+        "JUPYTER_KERNEL_CULL_IDLE_TIMEOUT": {
+          "defaultValue": "0",
+          "description": "Shut down kernels idle for this many seconds (no browser tab attached) to free RAM. 0 keeps kernels running.",
+          "required": false
+        },
+        "GRANT_SUDO": {
+          "defaultValue": "no",
+          "description": "Set yes to give the jovyan user passwordless sudo (apt installs). System changes are lost on redeploy; only /home/jovyan persists.",
+          "required": false
+        },
+        "TZ": {
+          "defaultValue": "UTC",
+          "description": "Time zone for notebooks and terminals (e.g. Europe/Istanbul).",
+          "required": false
+        },
+        "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+          "defaultValue": "30",
+          "description": "Grace period on redeploy so Jupyter can save state and shut kernels down cleanly.",
+          "required": false
+        }
+      }
+    }
+  },
+  "buckets": []
+}
